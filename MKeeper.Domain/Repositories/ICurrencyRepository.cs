@@ -10,9 +10,9 @@ public interface ICurrencyRepository
 
     Task<Currency[]> GetAll();
 
-    Task<int> AddCurrency(Currency currency);
+    Task<int> Add(Currency currency);
 
-    Task UpdateCurrency(Currency currency);
+    Task Update(Currency currency);
 
-    Task DeleteCurrency(int currencyId);
+    Task Delete(int currencyId);
 }

@@ -3,29 +3,29 @@ using MKeeper.Domain.Repositories;
 
 namespace MKeeper.DataAccess.PSQL.Repositories;
 
-public class UserRepository : IUserRepository
+public class TransferRepository : ITransferRepository
 {
-    public async Task<User> Get(int userId)
+    public async Task<int> Add(Transfer Transfer)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<User[]> GetAll()
+    public async Task Delete(int TransferId)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<int> Add(User user)
+    public async Task<Transfer[]> Get(int[] accountIds, DateTime from, DateTime to)
     {
         throw new NotImplementedException();
     }
 
-    public async Task Update(User user)
+    public async Task<Transfer[]> Get(int[] accountIds)
     {
         throw new NotImplementedException();
     }
 
-    public async Task Delete(int userId)
+    public async Task Update(Transfer Transfer)
     {
         throw new NotImplementedException();
     }

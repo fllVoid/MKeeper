@@ -4,13 +4,13 @@ namespace MKeeper.Domain.Repositories;
 
 public interface IAccountRepository
 {
-    Task<Account[]> GetAccounts(int userId);
+    Task<Account[]> Get(int userId);
 
-    Task<Account[]> GetAllAccounts();
+    Task<Account[]> GetAll();
 
-    Task<int> AddAccount(Account account);
+    Task<int> Add(Account account);
 
-    Task UpdateAccount(Account account);
+    Task Update(Account account);
 
-    Task DeleteAccount(int accountId);
+    Task Delete(int accountId);
 }

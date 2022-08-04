@@ -1,36 +1,31 @@
 ﻿using MKeeper.Domain.Models;
 using MKeeper.Domain.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MKeeper.DataAccess.PSQL.Repositories;
 
 public class AccountRepository : IAccountRepository
 {
-    public Task<Account[]> GetAccounts(int userId)
+    public async Task<int> Add(Account account)
     {
         throw new NotImplementedException();
     }
 
-    public Task<Account[]> GetAllAccounts()
+    public async Task Delete(int accountId)
     {
         throw new NotImplementedException();
     }
 
-    public Task<int> AddAccount(Account account)
+    public async Task<Account[]> Get(int userId)
     {
         throw new NotImplementedException();
     }
 
-    public Task UpdateAccount(Account account)
+    public async Task<Account[]> GetAll()
     {
         throw new NotImplementedException();
     }
 
-    public Task DeleteAccount(int accountId)
+    public async Task Update(Account account)
     {
         throw new NotImplementedException();
     }

@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MKeeper.Domain.Models;
-using MKeeper.Domain.Models.Abstract;
+using MKeeper.DataAccess.PSQL.Entities;
+using MKeeper.DataAccess.PSQL.Entities.Abstract;
 
 namespace MKeeper.DataAccess.PSQL;
 
-public class ApplicationContext : DbContext
+public class MKeeperDbContext : DbContext
 {
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Category> Categories { get; set; } = null!;
@@ -16,7 +16,7 @@ public class ApplicationContext : DbContext
     public DbSet<Currency> Currencies { get; set; } = null!;
     public DbSet<ScheduledTransaction> ScheduledTransactions { get; set; } = null!;
 
-    public ApplicationContext(DbContextOptions<ApplicationContext> options)
+    public MKeeperDbContext(DbContextOptions<MKeeperDbContext> options)
         : base(options)
     {
         Database.EnsureDeleted();
