@@ -1,4 +1,4 @@
-﻿namespace MKeeper.Domain.Models;
+﻿namespace MKeeper.DataAccess.PSQL.Entities;
 
 public class User
 {

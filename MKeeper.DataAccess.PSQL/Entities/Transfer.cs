@@ -1,6 +1,6 @@
 ﻿using MKeeper.Domain.Models.Abstract;
 
-namespace MKeeper.Domain.Models;
+namespace MKeeper.DataAccess.PSQL.Entities;
 
 public class Transfer : BaseTransaction
 {
