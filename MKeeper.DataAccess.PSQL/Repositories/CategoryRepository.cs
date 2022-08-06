@@ -5,6 +5,10 @@ namespace MKeeper.DataAccess.PSQL.Repositories;
 
 public class CategoryRepository : ICategoryRepository
 {
+    private readonly MKeeperDbContext _context;
+
+    public CategoryRepository(MKeeperDbContext context) => _context = context;
+
     public async Task<int> Add(Category category)
     {
         throw new NotImplementedException();

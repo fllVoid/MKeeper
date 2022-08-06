@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MKeeper.DataAccess.PSQL\MKeeper.DataAccess.PSQL.csproj" />
+    <ProjectReference Include="..\MKeeper.Domain\MKeeper.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

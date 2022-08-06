@@ -5,6 +5,10 @@ namespace MKeeper.DataAccess.PSQL.Repositories;
 
 public class ScheduledTransactionRepository : IScheduledTransactionRepository
 {
+    private readonly MKeeperDbContext _context;
+
+    public ScheduledTransactionRepository(MKeeperDbContext context) => _context = context;
+
     public async Task<int> Add(ScheduledTransaction scheduledTransaction)
     {
         throw new NotImplementedException();

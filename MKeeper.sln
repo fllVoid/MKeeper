@@ -5,7 +5,9 @@ VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MKeeper.Domain", "MKeeper.Domain\MKeeper.Domain.csproj", "{A2AC7B49-4AD4-4861-92F2-00CC878107C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MKeeper.DataAccess.PSQL", "MKeeper.DataAccess.PSQL\MKeeper.DataAccess.PSQL.csproj", "{5AEBEF73-7C1A-40BC-9061-7EC62F88C69B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MKeeper.DataAccess.PSQL", "MKeeper.DataAccess.PSQL\MKeeper.DataAccess.PSQL.csproj", "{5AEBEF73-7C1A-40BC-9061-7EC62F88C69B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MKeeper.BusinessLogic", "MKeeper.BusinessLogic\MKeeper.BusinessLogic.csproj", "{DA71689C-0DAB-4F43-A9ED-E72EC1A5B368}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{5AEBEF73-7C1A-40BC-9061-7EC62F88C69B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AEBEF73-7C1A-40BC-9061-7EC62F88C69B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AEBEF73-7C1A-40BC-9061-7EC62F88C69B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA71689C-0DAB-4F43-A9ED-E72EC1A5B368}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA71689C-0DAB-4F43-A9ED-E72EC1A5B368}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA71689C-0DAB-4F43-A9ED-E72EC1A5B368}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA71689C-0DAB-4F43-A9ED-E72EC1A5B368}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,6 +5,10 @@ namespace MKeeper.DataAccess.PSQL.Repositories;
 
 public class AccountRepository : IAccountRepository
 {
+    private readonly MKeeperDbContext _context;
+
+    public AccountRepository(MKeeperDbContext context) => _context = context;
+
     public async Task<int> Add(Account account)
     {
         throw new NotImplementedException();

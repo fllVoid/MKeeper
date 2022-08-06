@@ -5,6 +5,10 @@ namespace MKeeper.DataAccess.PSQL.Repositories;
 
 public class TransactionRepository : ITransactionRepository
 {
+    private readonly MKeeperDbContext _context;
+
+    public TransactionRepository(MKeeperDbContext context) => _context = context;
+
     public async Task<int> Add(Transaction transaction)
     {
         throw new NotImplementedException();

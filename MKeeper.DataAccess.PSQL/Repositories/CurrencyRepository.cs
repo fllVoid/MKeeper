@@ -5,6 +5,10 @@ namespace MKeeper.DataAccess.PSQL.Repositories;
 
 public class CurrencyRepository : ICurrencyRepository
 {
+    private readonly MKeeperDbContext _context;
+
+    public CurrencyRepository(MKeeperDbContext context) => _context = context;
+
     public async Task<int> Add(Currency currency)
     {
         throw new NotImplementedException();

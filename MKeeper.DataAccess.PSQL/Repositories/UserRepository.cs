@@ -5,6 +5,10 @@ namespace MKeeper.DataAccess.PSQL.Repositories;
 
 public class UserRepository : IUserRepository
 {
+    private readonly MKeeperDbContext _context;
+
+    public UserRepository(MKeeperDbContext context) => _context = context;
+
     public async Task<User> Get(int userId)
     {
         throw new NotImplementedException();

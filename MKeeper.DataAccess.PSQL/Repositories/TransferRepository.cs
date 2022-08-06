@@ -5,6 +5,10 @@ namespace MKeeper.DataAccess.PSQL.Repositories;
 
 public class TransferRepository : ITransferRepository
 {
+    private readonly MKeeperDbContext _context;
+
+    public TransferRepository(MKeeperDbContext context) => _context = context;
+
     public async Task<int> Add(Transfer Transfer)
     {
         throw new NotImplementedException();

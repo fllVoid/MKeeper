@@ -5,6 +5,10 @@ namespace MKeeper.DataAccess.PSQL.Repositories;
 
 public class DebtRepository : IDebtRepository
 {
+    private readonly MKeeperDbContext _context;
+
+    public DebtRepository(MKeeperDbContext context) => _context = context;
+
     public async Task<int> Add(Debt debt)
     {
         throw new NotImplementedException();
