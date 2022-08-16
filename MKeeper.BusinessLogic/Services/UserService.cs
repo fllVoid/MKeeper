@@ -1,4 +1,5 @@
-﻿using MKeeper.Domain.Models;
+﻿using MKeeper.Domain.Exceptions;
+using MKeeper.Domain.Models;
 using MKeeper.Domain.Repositories;
 using MKeeper.Domain.Services;
 
@@ -13,18 +14,61 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public Task<int> Create(User user)
+    public async Task<int> Create(User user)
     {
-        throw new NotImplementedException();
+        if (user is null)
+        {
+            throw new ArgumentNullException(nameof(user));
+        }
+        var isInvalid = string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Email);
+        if (isInvalid)
+        {
+            throw new BusinessException(nameof(user));
+        }
+
+        var userId = await _userRepository.Add(user);
+        return userId;
     }
 
-    public Task Delete(int userId)
+    public Task<User> Get(int userId)
     {
-        throw new NotImplementedException();
+        if (userId <= 0)
+        {
+            throw new ArgumentException(nameof(userId));
+        }
+        return _userRepository.Get(userId);
     }
 
-    public Task Update(User user)
+    public Task<User> Get(string email)
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            throw new BusinessException(nameof(email));
+        }
+        return _userRepository.Get(email);
+    }
+
+    public async Task Delete(int userId)
+    {
+        if (userId <= 0)
+        {
+            throw new ArgumentException(nameof(userId));
+        }
+        await _userRepository.Delete(userId);
+    }
+
+    public async Task Update(User user)
+    {
+        if (user is null)
+        {
+            throw new ArgumentNullException(nameof(user));
+        }
+        var isInvalid = string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Email)
+            || user.Id <= 0;
+        if (isInvalid)
+        {
+            throw new BusinessException(nameof(user));
+        }
+        await _userRepository.Update(user);
     }
 }

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MKeeper.DataAccess.PSQL", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MKeeper.BusinessLogic", "MKeeper.BusinessLogic\MKeeper.BusinessLogic.csproj", "{DA71689C-0DAB-4F43-A9ED-E72EC1A5B368}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MKeeper.BusinessLogic.XTests", "MKeeper.BusinessLogic.XTests\MKeeper.BusinessLogic.XTests.csproj", "{26225A40-6480-4EEE-9BBF-1497B10C4FAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{DA71689C-0DAB-4F43-A9ED-E72EC1A5B368}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA71689C-0DAB-4F43-A9ED-E72EC1A5B368}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA71689C-0DAB-4F43-A9ED-E72EC1A5B368}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26225A40-6480-4EEE-9BBF-1497B10C4FAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26225A40-6480-4EEE-9BBF-1497B10C4FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26225A40-6480-4EEE-9BBF-1497B10C4FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26225A40-6480-4EEE-9BBF-1497B10C4FAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

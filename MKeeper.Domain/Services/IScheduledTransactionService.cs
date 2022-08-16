@@ -6,7 +6,9 @@ public interface IScheduledTransactionService
 {
     Task<int> Create(ScheduledTransaction transaction);
 
+    Task<ScheduledTransaction[]> Get(int[] accountIds);
+
     Task Update(ScheduledTransaction transaction);
 
-    Task Delete(ScheduledTransaction transaction);
+    Task Delete(int scheduledTransactionId);
 }
