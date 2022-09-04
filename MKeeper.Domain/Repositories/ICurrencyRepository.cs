@@ -14,5 +14,7 @@ public interface ICurrencyRepository
 
     Task Update(Currency currency);
 
+    Task Update(Currency[] currencies);
+
     Task Delete(int currencyId);
 }

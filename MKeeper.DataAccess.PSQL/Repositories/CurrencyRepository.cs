@@ -38,4 +38,9 @@ public class CurrencyRepository : ICurrencyRepository
     {
         throw new NotImplementedException();
     }
+
+    public async Task Update(Currency[] currencies)
+    {
+        throw new NotImplementedException();
+    }
 }
