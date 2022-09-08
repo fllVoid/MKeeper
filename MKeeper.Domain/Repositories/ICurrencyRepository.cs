@@ -4,17 +4,17 @@ namespace MKeeper.Domain.Repositories;
 
 public interface ICurrencyRepository
 {
-    Task<Currency> GetByAlphaCode(string alphaCode);
+    Task<Currency> GetByAlphaCodeAsync(string alphaCode);
 
-    Task<Currency> GetByNumericCode(string numericCode);
+    Task<Currency> GetByNumericCodeAsync(string numericCode);
 
-    Task<Currency[]> GetAll();
+    Task<Currency[]> GetAllAsync();
 
-    Task<int> Add(Currency currency);
+    Task<int> AddAsync(Currency currency);
 
-    Task Update(Currency currency);
+    Task UpdateAsync(Currency currency);
 
-    Task Update(Currency[] currencies);
+    Task UpdateAsync(Currency[] currencies);
 
-    Task Delete(int currencyId);
+    Task DeleteAsync(int currencyId);
 }
