@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MKeeper.Domain", "MKeeper.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MKeeper.DataAccess.PSQL", "MKeeper.DataAccess.PSQL\MKeeper.DataAccess.PSQL.csproj", "{5AEBEF73-7C1A-40BC-9061-7EC62F88C69B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MKeeper.BusinessLogic", "MKeeper.BusinessLogic\MKeeper.BusinessLogic.csproj", "{DA71689C-0DAB-4F43-A9ED-E72EC1A5B368}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MKeeper.BusinessLogic", "MKeeper.BusinessLogic\MKeeper.BusinessLogic.csproj", "{DA71689C-0DAB-4F43-A9ED-E72EC1A5B368}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MKeeper.BusinessLogic.XTests", "MKeeper.BusinessLogic.XTests\MKeeper.BusinessLogic.XTests.csproj", "{26225A40-6480-4EEE-9BBF-1497B10C4FAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MKeeper.BusinessLogic.XTests", "MKeeper.BusinessLogic.XTests\MKeeper.BusinessLogic.XTests.csproj", "{26225A40-6480-4EEE-9BBF-1497B10C4FAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MKeeper.Infrastructure", "MKeeper.Infrastructure\MKeeper.Infrastructure.csproj", "{F387DEB9-19BE-45C4-8C1A-36CE807DF79D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{26225A40-6480-4EEE-9BBF-1497B10C4FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26225A40-6480-4EEE-9BBF-1497B10C4FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26225A40-6480-4EEE-9BBF-1497B10C4FAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F387DEB9-19BE-45C4-8C1A-36CE807DF79D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F387DEB9-19BE-45C4-8C1A-36CE807DF79D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F387DEB9-19BE-45C4-8C1A-36CE807DF79D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F387DEB9-19BE-45C4-8C1A-36CE807DF79D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

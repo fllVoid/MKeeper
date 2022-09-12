@@ -41,9 +41,9 @@ public class CurrencyRefresherBackgroundService : IHostedService
         try
         {
             //work
-            var existingCurrencies = await _repository.GetAllAsync();
-            var freshCurrencies = await _apiClient.GetFreshCurrencies(existingCurrencies);
-            await _repository.UpdateAsync(freshCurrencies);
+            var existingCurrencies = await _repository.GetAllAsync(stoppingToken);
+            var freshCurrencies = await _apiClient.GetFreshCurrencies(existingCurrencies, stoppingToken);
+            await _repository.UpdateAsync(freshCurrencies, stoppingToken);
         }
         catch (Exception ex)
         {

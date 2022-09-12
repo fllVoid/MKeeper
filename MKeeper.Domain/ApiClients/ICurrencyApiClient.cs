@@ -9,6 +9,6 @@ namespace MKeeper.Domain.ApiClients
 {
     public interface ICurrencyApiClient
     {
-        Task<Currency[]> GetFreshCurrencies(Currency[] currencies);
+        Task<Currency[]> GetFreshCurrencies(Currency[] currencies, CancellationToken cancellationToken = default);
     }
 }
