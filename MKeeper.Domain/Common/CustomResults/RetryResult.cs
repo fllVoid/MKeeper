@@ -1,4 +1,4 @@
-﻿namespace MKeeper.Infrastructure.Common.CustomResults;
+﻿namespace MKeeper.Domain.Common.CustomResults;
 
 public class RetryResult : ErrorResult
 {

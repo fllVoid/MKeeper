@@ -1,5 +1,5 @@
 ﻿
-namespace MKeeper.Infrastructure.Common.CustomResults;
+namespace MKeeper.Domain.Common.CustomResults;
 
 public abstract class Result
 {
