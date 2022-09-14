@@ -8,7 +8,7 @@ using FluentAssertions;
 using System;
 using MKeeper.Domain.Exceptions;
 
-namespace MKeeper.BusinessLogic.XTests;
+namespace MKeeper.BusinessLogic.XTests.ServiceTests;
 
 public class UserServiceTests
 {
