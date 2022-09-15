@@ -1,56 +1,75 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using MKeeper.Domain.ApiClients;
 using MKeeper.Domain.Repositories;
+using MKeeper.Domain.Common.CustomResults;
+using MKeeper.Domain.Models;
+using Microsoft.Extensions.Logging;
 
 namespace MKeeper.BusinessLogic.BackgroundServices;
 
 public class CurrencyRefresherBackgroundService : IHostedService
 {
-    private readonly ICurrencyApiClient _apiClient;
-    private readonly ICurrencyRepository _repository;
+	private const int _numberOfTries = 5;
+	private readonly ICurrencyApiClient _apiClient;
+	private readonly ICurrencyRepository _repository;
+    private readonly ILogger _logger;
     private Timer? _timer;
 
-    public CurrencyRefresherBackgroundService(ICurrencyApiClient apiClient, ICurrencyRepository repository)
-    {
-        _apiClient = apiClient;
-        _repository = repository;
-    }
+	public CurrencyRefresherBackgroundService(ICurrencyApiClient apiClient,
+		ICurrencyRepository repository,
+		ILogger logger)
+	{
+		_apiClient = apiClient;
+		_repository = repository;
+		_logger = logger;
+	}
 
-    public Task StartAsync(CancellationToken cancellationToken)
-    {
-        _timer = new Timer(async _ => await OnTimerFiredAsync(cancellationToken),
-            null,
-            TimeSpan.FromHours(0),
-            TimeSpan.FromHours(1));
-        return Task.CompletedTask;
-    }
+	public Task StartAsync(CancellationToken cancellationToken)
+	{
+		_timer = new Timer(async _ => await OnTimerFiredAsync(cancellationToken),
+			null,
+			TimeSpan.FromHours(0),
+			TimeSpan.FromHours(1));
+		return Task.CompletedTask;
+	}
 
-    public Task StopAsync(CancellationToken cancellationToken)
-    {
-        _timer?.Dispose();
-        return Task.CompletedTask;
-    }
+	public Task StopAsync(CancellationToken cancellationToken)
+	{
+		_timer?.Dispose();
+		return Task.CompletedTask;
+	}
 
-    private async Task OnTimerFiredAsync(CancellationToken stoppingToken)
-    {
-        try
-        {
-            //work
-            var existingCurrencies = await _repository.GetAllAsync(stoppingToken);
-            var freshCurrencies = await _apiClient.GetFreshCurrencies(existingCurrencies, stoppingToken);
-            await _repository.UpdateAsync(freshCurrencies, stoppingToken);
-        }
-        catch (Exception ex)
-        {
-            //TODO at least, log exception here
-        }
-        finally
-        {
-        }
-    }
+	private async Task OnTimerFiredAsync(CancellationToken stoppingToken)
+	{
+		try
+		{
+			var existingCurrencies = await _repository.GetAllAsync(stoppingToken);
+			var tries = _numberOfTries;
+			while (tries > 0)
+			{
+				if (stoppingToken.IsCancellationRequested)
+                {
+					stoppingToken.ThrowIfCancellationRequested();
+                }
+				var result = await _apiClient.GetFreshCurrencies(existingCurrencies, stoppingToken);
+				if (result is RetryResult<Currency[]>)
+                {
+					tries--;
+					continue;
+                }
+                if (result is ErrorResult<Currency[]>)
+                {
+                    break;
+                }
+
+				Currency[] freshCurrencies = result.Data;
+				await _repository.UpdateAsync(freshCurrencies, stoppingToken);
+				break;
+			}
+		}
+		catch (Exception exception)
+		{
+			_logger.LogError(exception, "UnhandledException when refreshing currencies");
+		}
+	}
 }
