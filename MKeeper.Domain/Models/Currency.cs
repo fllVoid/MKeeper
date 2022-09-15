@@ -2,6 +2,8 @@
 
 public class Currency
 {
+    public Currency() { }
+
     public Currency(Currency currency)
     {
         Id = currency.Id;
