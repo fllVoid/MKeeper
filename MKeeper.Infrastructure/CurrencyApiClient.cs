@@ -136,7 +136,7 @@ public class CurrencyApiClient : ICurrencyApiClient
         }
         catch (Exception exception)
         {
-            throw new BrokenJsonException(exception.Message);
+            throw new BrokenJsonException(exception.Message, exception);
         }
     }
 
