@@ -70,11 +70,6 @@ public class CurrencyApiClient : ICurrencyApiClient
             _logger.LogError(exception, "Task was canceled during call to API");
             return new RetryResult<Currency[]>("Task was canceled during call to API");
         }
-        catch (TimeoutException exception)
-        {
-            _logger.LogError(exception, "TimeoutException during call to API");
-            return new RetryResult<Currency[]>("TimeoutException during call to API");
-        }
         catch (BrokenJsonException exception)
         {
             _logger.LogError(exception, "Invalid json content");
