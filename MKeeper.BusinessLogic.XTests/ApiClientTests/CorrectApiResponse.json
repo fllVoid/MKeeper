@@ -1,0 +1,11 @@
+{
+    "disclaimer": "blabla",
+    "license": "blablabla",
+    "timestamp": 1662991200,
+    "base": "USD",
+    "rates": {
+        "EUR": 0.987846,
+        "RUB": 60.325002,
+        "USD": 1
+    }
+}

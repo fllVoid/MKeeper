@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -27,6 +27,13 @@
   <ItemGroup>
     <ProjectReference Include="..\MKeeper.BusinessLogic\MKeeper.BusinessLogic.csproj" />
     <ProjectReference Include="..\MKeeper.Domain\MKeeper.Domain.csproj" />
+    <ProjectReference Include="..\MKeeper.Infrastructure\MKeeper.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="ApiClientTests\CorrectApiResponse.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
