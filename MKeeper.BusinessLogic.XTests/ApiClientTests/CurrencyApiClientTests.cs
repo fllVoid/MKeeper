@@ -154,10 +154,12 @@ public class CurrencyApiClientTests
     [Fact]
     public async Task GetFreshCurrencies_OnTaskCanceledException_ShouldReturnRetryResult()
     {
-        var httpClient = new HttpClient(new MockedHttpMessageHandler(() => throw new TaskCanceledException()));
+        HttpResponseMessage apiResponse = new HttpResponseMessage(HttpStatusCode.OK);
+        var httpClient = new HttpClient(new MockedHttpMessageHandler(apiResponse));
         var apiClient = new CurrencyApiClient(httpClient, _apiConfig, _fakeLogger);
-
-        var result = await apiClient.GetFreshCurrencies(new Currency[1]);
+        var cancelledToken = new CancellationToken(true);
+        
+        var result = await apiClient.GetFreshCurrencies(new Currency[1], cancelledToken);
 
         result.Should().NotBeNull();
         result.Should().BeOfType<RetryResult<Currency[]>>();
