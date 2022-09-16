@@ -44,7 +44,7 @@ public class CurrencyRepository : ICurrencyRepository
     {
         var result = await _context.Currencies
             .AsNoTracking()
-            .SingleAsync(entry => entry.AlphaCode == alphaCode, cancellationToken);
+            .SingleAsync(entry => entry.AlphabeticCode == alphaCode, cancellationToken);
         return _mapper.Map<Domain.Models.Currency>(result);
     }
 

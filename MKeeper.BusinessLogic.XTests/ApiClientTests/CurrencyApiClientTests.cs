@@ -38,9 +38,9 @@ public class CurrencyApiClientTests
         var httpClient = new HttpClient(new MockedHttpMessageHandler(apiResponse));
         var apiClient = new CurrencyApiClient(httpClient, _apiConfig, _fakeLogger);
         var expiredCurrencies = new[]{
-            new Currency() { AlphaCode = "RUB", ExchangeRate = 60M },
-            new Currency() { AlphaCode = "EUR", ExchangeRate = 0.9M },
-            new Currency() { AlphaCode = "USD", ExchangeRate = 1M }
+            new Currency() { AlphabeticCode = "RUB", ExchangeRate = 60M },
+            new Currency() { AlphabeticCode = "EUR", ExchangeRate = 0.9M },
+            new Currency() { AlphabeticCode = "USD", ExchangeRate = 1M }
         };
 
         var result = await apiClient.GetFreshCurrencies(expiredCurrencies);
@@ -194,9 +194,9 @@ public class CurrencyApiClientTests
     {
         foreach(var c in expiredCurrencies)
         {
-            if (c.AlphaCode == baseCurrencyAlphabeticCode)
+            if (c.AlphabeticCode == baseCurrencyAlphabeticCode)
                 continue;
-            var twin = freshCurrencies.First(x => x.AlphaCode == c.AlphaCode);
+            var twin = freshCurrencies.First(x => x.AlphabeticCode == c.AlphabeticCode);
             if (twin.ExchangeRate == c.ExchangeRate)
                 return false;
         }

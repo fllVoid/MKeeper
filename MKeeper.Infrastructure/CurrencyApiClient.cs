@@ -92,7 +92,7 @@ public class CurrencyApiClient : ICurrencyApiClient
         var tmpRateObj = new ApiResponse.CurrencyRate(); //obj for passing to BinarySearch
         for (int i = 0; i < freshCurrencies.Length; i++)
         {
-            tmpRateObj.AlphabeticCode = freshCurrencies[i].AlphaCode;
+            tmpRateObj.AlphabeticCode = freshCurrencies[i].AlphabeticCode;
             var index = Array.BinarySearch(rates, tmpRateObj, new CurrencyRateComparer());
             if (index >= 0)
                 freshCurrencies[i].ExchangeRate = rates[index].Rate;
