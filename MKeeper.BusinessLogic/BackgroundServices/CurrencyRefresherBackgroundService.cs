@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace MKeeper.BusinessLogic.BackgroundServices;
 
-public class CurrencyRefresherBackgroundService : IHostedService
+public class CurrencyRefresherBackgroundService : IHostedService, IAsyncDisposable
 {
 	private const int _numberOfTries = 5;
 	private readonly ICurrencyApiClient _apiClient;
@@ -24,7 +24,7 @@ public class CurrencyRefresherBackgroundService : IHostedService
 		_logger = logger;
 	}
 
-	public Task StartAsync(CancellationToken cancellationToken)
+    public Task StartAsync(CancellationToken cancellationToken)
 	{
 		_timer = new Timer(async _ => await OnTimerFiredAsync(cancellationToken),
 			null,
@@ -33,10 +33,9 @@ public class CurrencyRefresherBackgroundService : IHostedService
 		return Task.CompletedTask;
 	}
 
-	public Task StopAsync(CancellationToken cancellationToken)
+	public async Task StopAsync(CancellationToken cancellationToken)
 	{
-		_timer?.Dispose();
-		return Task.CompletedTask;
+		await DisposeAsync();
 	}
 
 	private async Task OnTimerFiredAsync(CancellationToken stoppingToken)
@@ -71,5 +70,14 @@ public class CurrencyRefresherBackgroundService : IHostedService
 		{
 			_logger.LogError(exception, "UnhandledException when refreshing currencies");
 		}
+	}
+
+	public async ValueTask DisposeAsync()
+	{
+		if (_timer is IAsyncDisposable timer)
+		{
+			await timer.DisposeAsync();
+		}
+		_timer = null;
 	}
 }
