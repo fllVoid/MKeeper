@@ -26,7 +26,8 @@ public class UserService : IUserService
         var isInvalid = string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Email);
         if (isInvalid)
         {
-            throw new BusinessException(nameof(user));
+            return new ErrorResult<int>($"Invalid username or email:\nusername: '{user.Username}'" +
+                $"\nemail: '{user.Email}'");
         }
 
         var userId = await _userRepository.Add(user);
@@ -37,7 +38,7 @@ public class UserService : IUserService
     {
         if (userId <= 0)
         {
-            throw new ArgumentException(nameof(userId));
+            return new ErrorResult<User>($"UserId is less than zero: {userId}");
         }
         var user = await _userRepository.Get(userId);
         return new SuccessResult<User>(user);
@@ -47,7 +48,7 @@ public class UserService : IUserService
     {
         if (string.IsNullOrWhiteSpace(email))
         {
-            throw new BusinessException(nameof(email));
+            return new ErrorResult<User>($"Invalid email: '{email}'");
         }
         var user = await _userRepository.Get(email);
         return new SuccessResult<User>(user);
@@ -57,7 +58,7 @@ public class UserService : IUserService
     {
         if (userId <= 0)
         {
-            throw new ArgumentException(nameof(userId));
+            return new ErrorResult($"Invalid userId value: {userId}");
         }
         await _userRepository.Delete(userId);
         return new SuccessResult();
@@ -74,7 +75,10 @@ public class UserService : IUserService
         if (isInvalid)
         {
             //TODO maybe change to kind of EntitiyNotValidResult
-            throw new BusinessException(nameof(user));
+            return new ErrorResult("Invalid data in User object:\n" +
+                $"Id: {user.Id}\n" +
+                $"Username: '{user.Username}'" +
+                $"Email: '{user.Email}'");
         }
         await _userRepository.Update(user);
         return new SuccessResult();
@@ -84,33 +88,33 @@ public class UserService : IUserService
     {
         if (string.IsNullOrWhiteSpace(oldPass) || string.IsNullOrWhiteSpace(newPass))
         {
-            throw new ArgumentException("Password was null or white space");
+            return new ErrorResult("Password was null or white space");
         }
         if (userId <= 0)
         {
-            throw new ArgumentException($"Invalid userId value: {userId}");
+            return new ErrorResult($"Invalid userId value: {userId}");
         }
         var user = await _userRepository.Get(userId);//TODO check null value
         return await ChangePassword(user, oldPass, newPass);
     }
 
-    public async Task<Result> ChangePassword(string userLogin, string oldPass, string newPass)
+    public async Task<Result> ChangePassword(string email, string oldPass, string newPass)
     {
         if (string.IsNullOrWhiteSpace(oldPass) || string.IsNullOrWhiteSpace(newPass))
         {
-            throw new ArgumentException("Password was null or white space");
+            return new ErrorResult("Password was null or white space");
         }
-        if (string.IsNullOrWhiteSpace(userLogin))
+        if (string.IsNullOrWhiteSpace(email))
         {
-            throw new ArgumentException($"Invalid login value: {userLogin}");
+            return new ErrorResult($"Invalid email: '{email}'");
         }
-        var user = await _userRepository.Get(userLogin);//TODO check null value
+        var user = await _userRepository.Get(email);//TODO check null value
         return await ChangePassword(user, oldPass, newPass);
     }
 
     private async Task<Result> ChangePassword(User user, string oldPass, string newPass)
     {
-        var oldPassHash = HashPassword(HashPassword(oldPass));
+        var oldPassHash = HashPassword(oldPass);
         if (user.PasswordHash == oldPassHash)
         {
             var newPassHash = HashPassword(newPass);
