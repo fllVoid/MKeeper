@@ -1,31 +1,51 @@
 ﻿using MKeeper.Domain.Models;
 using MKeeper.Domain.Repositories;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace MKeeper.DataAccess.PSQL.Repositories;
 
 public class ScheduledTransactionRepository : IScheduledTransactionRepository
 {
     private readonly MKeeperDbContext _context;
+    private readonly IMapper _mapper;
 
-    public ScheduledTransactionRepository(MKeeperDbContext context) => _context = context;
-
-    public async Task<int> Add(ScheduledTransaction scheduledTransaction)
+    public ScheduledTransactionRepository(MKeeperDbContext context, IMapper mapper)
     {
-        throw new NotImplementedException();
+        _context = context;
+        _mapper = mapper;
     }
 
-    public async Task Delete(int sheduledTransactionId)
+    public async Task<int> Add(ScheduledTransaction scheduledTransaction, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var mapped = _mapper.Map<Entities.ScheduledTransaction>(scheduledTransaction);
+        await _context.ScheduledTransactions.AddAsync(mapped, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+        return mapped.Id;
     }
 
-    public async Task<ScheduledTransaction[]> Get(int[] accountIds)
+    public async Task Delete(int scheduledTransactionId, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var entity = new Entities.ScheduledTransaction() { Id = scheduledTransactionId };
+        _context.ScheduledTransactions.Remove(entity);
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task Update(ScheduledTransaction scheduledTransaction)
+    public async Task<ScheduledTransaction[]> Get(int[] accountIds, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        //TODO bad sql query maybe will be generated here. think about
+        var entities = await _context.ScheduledTransactions
+            .AsNoTracking()
+            .Where(x => accountIds.Contains(x.Id))
+            .ToArrayAsync(cancellationToken);
+        var mapped = _mapper.Map<ScheduledTransaction[]>(entities);
+        return mapped;
+    }
+
+    public async Task Update(ScheduledTransaction scheduledTransaction, CancellationToken cancellationToken)
+    {
+        var mapped = _mapper.Map<Entities.ScheduledTransaction>(scheduledTransaction);
+        _context.ScheduledTransactions.Update(mapped);
+        await _context.SaveChangesAsync(cancellationToken);
     }
 }

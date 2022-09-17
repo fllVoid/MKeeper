@@ -4,13 +4,13 @@ namespace MKeeper.Domain.Repositories;
 
 public interface ITransferRepository
 {
-    Task<Transfer[]> Get(int[] accountIds, DateTime from, DateTime to);
+    Task<Transfer[]> Get(int[] accountIds, DateTime from, DateTime to, CancellationToken cancellationToken);
 
-    Task<Transfer[]> Get(int[] accountIds);
+    Task<Transfer[]> Get(int[] accountIds, CancellationToken cancellationToken);
 
-    Task<int> Add(Transfer Transfer);
+    Task<int> Add(Transfer transfer, CancellationToken cancellationToken);
 
-    Task Update(Transfer Transfer);
+    Task Update(Transfer transfer, CancellationToken cancellationToken);
 
-    Task Delete(int TransferId);
+    Task Delete(int transferId, CancellationToken cancellationToken);
 }

@@ -4,17 +4,17 @@ namespace MKeeper.Domain.Repositories;
 
 public interface ICategoryRepository
 {
-    Task<Category[]> Get(int userId);
+    Task<Category[]> Get(int userId, CancellationToken cancellationToken);
 
-    Task<Category[]> GetChild(int parentCategoryId);
+    Task<Category[]> GetChild(int parentCategoryId, CancellationToken cancellationToken);
 
-    Task<Category[]> GetIncome(int userId);
+    Task<Category[]> GetIncome(int userId, CancellationToken cancellationToken);
 
-    Task<Category[]> GetExpense(int userId);
+    Task<Category[]> GetExpense(int userId, CancellationToken cancellationToken);
 
-    Task<int> Add(Category category);
+    Task<int> Add(Category category, CancellationToken cancellationToken);
 
-    Task Update(Category category);
+    Task Update(Category category, CancellationToken cancellationToken);
 
-    Task Delete(int categoryId);
+    Task Delete(int categoryId, CancellationToken cancellationToken);
 }

@@ -4,13 +4,13 @@ namespace MKeeper.Domain.Repositories;
 
 public interface IDebtRepository
 {
-    Task<Debt[]> Get(int accountId);
+    Task<Debt[]> Get(int accountId, CancellationToken cancellationToken);
 
-    Task<Debt[]> GetAll();
+    Task<Debt[]> GetAll(CancellationToken cancellationToken);
 
-    Task<int> Add(Debt debt);
+    Task<int> Add(Debt debt, CancellationToken cancellationToken);
 
-    Task Update(Debt debt);
+    Task Update(Debt debt, CancellationToken cancellationToken);
 
-    Task Delete(int debtId);
+    Task Delete(int debtId, CancellationToken cancellationToken);
 }

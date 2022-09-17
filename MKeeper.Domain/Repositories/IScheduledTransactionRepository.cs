@@ -4,11 +4,11 @@ namespace MKeeper.Domain.Repositories;
 
 public interface IScheduledTransactionRepository
 {
-    Task<ScheduledTransaction[]> Get(int[] accountIds);
+    Task<ScheduledTransaction[]> Get(int[] accountIds, CancellationToken cancellationToken);
 
-    Task<int> Add(ScheduledTransaction scheduledTransaction);
+    Task<int> Add(ScheduledTransaction scheduledTransaction, CancellationToken cancellationToken);
 
-    Task Update(ScheduledTransaction scheduledTransaction);
+    Task Update(ScheduledTransaction scheduledTransaction, CancellationToken cancellationToken);
 
-    Task Delete(int sheduledTransactionId);
+    Task Delete(int scheduledTransactionId, CancellationToken cancellationToken);
 }
