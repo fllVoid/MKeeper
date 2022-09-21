@@ -2,6 +2,8 @@
 using MKeeper.Domain.Models;
 using MKeeper.Domain.Repositories;
 using MKeeper.Domain.Services;
+using MKeeper.Domain.Common.CustomResults;
+using MKeeper.BusinessLogic.CustomResults;
 
 namespace MKeeper.BusinessLogic.Services;
 
@@ -14,7 +16,7 @@ public class DebtService : IDebtService
         _debtRepository = debtRepository;
     }
 
-    public async Task<int> Create(Debt debt)
+    public async Task<Result<int>> Create(Debt debt)
     {
         if (debt == null)
         {
@@ -24,42 +26,45 @@ public class DebtService : IDebtService
             || debt.SourceAccount == null;
         if (isInvalid)
         {
-            throw new BusinessException(nameof(debt));
+            return new InvalidDebtResult<int>($"Invalid Debt object:\n{debt}");
         }
-        return await _debtRepository.Add(debt);
+        var id = await _debtRepository.Add(debt);
+        return new SuccessResult<int>(id);
     }
 
-    public async Task<Debt[]> Get(int accountId)
+    public async Task<Result<Debt[]>> Get(int accountId)
     {
         if (accountId <= 0)
         {
-            throw new ArgumentException(nameof(accountId));
+            return new InvalidIdResult<Debt[]>($"Invalid accountId value: {accountId}");
         }
         var debts = await _debtRepository.Get(accountId);
-        return debts;
+        return new SuccessResult<Debt[]>(debts);
     }
 
-    public async Task Update(Debt debt)
+    public async Task<Result> Update(Debt debt)
     {
         if (debt == null)
         {
             throw new ArgumentNullException(nameof(debt));
         }
         var isInvalid = debt.RepaymentDate < debt.CreationDate || string.IsNullOrWhiteSpace(debt.SubjectName)
-            || debt.SourceAccount == null;
+            || debt.SourceAccount == null || debt.Id <= 0;
         if (isInvalid)
         {
-            throw new BusinessException(nameof(debt));
+            return new InvalidDebtResult($"Invalid Debt object: {debt}");
         }
         await _debtRepository.Update(debt);
+        return new SuccessResult();
     }
 
-    public async Task Delete(int debtId)
+    public async Task<Result> Delete(int debtId)
     {
         if (debtId <= 0)
         {
-            throw new ArgumentException(nameof(debtId));
+            return new InvalidIdResult($"Invalid debtId value: {debtId}");
         }
         await _debtRepository.Delete(debtId);
+        return new SuccessResult();
     }
 }

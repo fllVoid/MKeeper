@@ -1,19 +1,19 @@
 ﻿using MKeeper.Domain.Models;
+using MKeeper.Domain.Common.CustomResults;
 
 namespace MKeeper.Domain.Services;
 
 public interface ITransactionService
 {
-    Task<int> Create(Transaction transaction);
+    Task<Result<int>> Create(Transaction transaction);
 
-    Task<Transaction[]> Get(int[] accountIds, int[] categoryIds, DateTime from, DateTime to);
+    Task<Result<Transaction[]>> Get(int[] accountIds, int[] categoryIds, DateTime from, DateTime to);
 
-    Task<Transaction[]> Get(int[] accountIds, int[] categoryIds);
+    Task<Result<Transaction[]>> Get(int[] accountIds, int[] categoryIds);
 
-    Task<Transaction[]> Get(int[] accountIds);
+    Task<Result<Transaction[]>> Get(int[] accountIds);
 
+    Task<Result> Update(Transaction transaction);
 
-    Task Update(Transaction transaction);
-
-    Task Delete(int transactionId);
+    Task<Result> Delete(int transactionId);
 }

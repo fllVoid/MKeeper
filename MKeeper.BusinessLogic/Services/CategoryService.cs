@@ -2,6 +2,8 @@
 using MKeeper.Domain.Models;
 using MKeeper.Domain.Repositories;
 using MKeeper.Domain.Services;
+using MKeeper.Domain.Common.CustomResults;
+using MKeeper.BusinessLogic.CustomResults;
 
 namespace MKeeper.BusinessLogic.Services;
 
@@ -14,7 +16,7 @@ public class CategoryService : ICategoryService
         _categoryRepository = categoryRepository;
     }
 
-    public async Task<int> Create(Category category)
+    public async Task<Result<int>> Create(Category category)
     {
         if (category is null)
         {
@@ -23,32 +25,33 @@ public class CategoryService : ICategoryService
         var isInvalid = string.IsNullOrWhiteSpace(category.Name) || category.User.Id <= 0;
         if (isInvalid)
         {
-            throw new BusinessException(nameof(category));
+            return new InvalidCategoryResult<int>($"Invalid category object:\n{category}");
         }
-        return await _categoryRepository.Add(category);
+        var id = await _categoryRepository.Add(category);
+        return new SuccessResult<int>(id);
     }
 
-    public async Task<Category[]> Get(int userId)
+    public async Task<Result<Category[]>> Get(int userId)
     {
         if (userId <= 0)
         {
-            throw new ArgumentException(nameof(userId));
+            return new InvalidIdResult<Category[]>($"Invalid userId value: {userId}");
         }
         var categories = await _categoryRepository.Get(userId);
-        return categories;
+        return new SuccessResult<Category[]>(categories);
     }
 
-    public async Task<Category[]> GetSubcategories(int parentCategoryId)
+    public async Task<Result<Category[]>> GetSubcategories(int parentCategoryId)
     {
         if (parentCategoryId <= 0)
         {
-            throw new ArgumentException(nameof(parentCategoryId));
+            return new InvalidIdResult<Category[]>($"Invalid parentCategoryId: {parentCategoryId}");
         }
         var subcategories = await _categoryRepository.GetChild(parentCategoryId);
-        return subcategories;
+        return new SuccessResult<Category[]>(subcategories);
     }
 
-    public async Task Update(Category category)
+    public async Task<Result> Update(Category category)
     {
         if (category == null)
         {
@@ -58,17 +61,19 @@ public class CategoryService : ICategoryService
             || category.Id <= 0;
         if (isInvalid)
         {
-            throw new BusinessException(nameof(category));
+            return new InvalidCategoryResult($"Invalid category object:\n{category}");
         }
         await _categoryRepository.Update(category);
+        return new SuccessResult();
     }
 
-    public async Task Delete(int categoryId)
+    public async Task<Result> Delete(int categoryId)
     {
         if (categoryId <= 0)
         {
-            throw new ArgumentException(nameof(categoryId));
+            return new InvalidIdResult($"Invalid categoryId value: {categoryId}");
         }
         await _categoryRepository.Delete(categoryId);
+        return new SuccessResult();
     }
 }

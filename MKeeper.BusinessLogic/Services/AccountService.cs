@@ -2,6 +2,8 @@
 using MKeeper.Domain.Models;
 using MKeeper.Domain.Repositories;
 using MKeeper.Domain.Services;
+using MKeeper.Domain.Common.CustomResults;
+using MKeeper.BusinessLogic.CustomResults;
 
 namespace MKeeper.BusinessLogic.Services;
 
@@ -14,7 +16,7 @@ public class AccountService : IAccountService
         _accountRepository = accountRepository;
     }
 
-    public async Task<int> Create(Account account)
+    public async Task<Result<int>> Create(Account account)
     {
         if (account is null)
         {
@@ -23,32 +25,33 @@ public class AccountService : IAccountService
         var isInvalid = account.User is null || account.Currency == null;
         if (isInvalid)
         {
-            throw new BusinessException(nameof(account));
+            return new InvalidAccountResult<int>($"Invalid Account object: {account}");
         }
         var accountId = await _accountRepository.Add(account);
-        return accountId;
+        return new SuccessResult<int>(accountId);
     }
 
-    public async Task<Account[]> Get(int userId)
+    public async Task<Result<Account[]>> Get(int userId)
     {
         if (userId <= 0)
         {
-            throw new ArgumentException(nameof(userId));
+            return new InvalidIdResult<Account[]>($"Invalid userId value: {userId}");
         }
         var accounts = await _accountRepository.Get(userId);
-        return accounts;
+        return new SuccessResult<Account[]>(accounts);
     }
 
-    public async Task Delete(int accountId)
+    public async Task<Result> Delete(int accountId)
     {
         if (accountId <= 0)
         {
-            throw new ArgumentException(nameof(accountId));
+            return new InvalidIdResult($"Invalid accountId value: {accountId}");
         }
         await _accountRepository.Delete(accountId);
+        return new SuccessResult();
     }
 
-    public async Task Update(Account account)
+    public async Task<Result> Update(Account account)
     {
         if (account is null)
         {
@@ -57,8 +60,9 @@ public class AccountService : IAccountService
         var isInvalid = account.User is null || account.Currency == null || account.Id <= 0;
         if (isInvalid)
         {
-            throw new BusinessException(nameof(account));
+            return new InvalidAccountResult($"Invalid account object:\n{account}");
         }
         await _accountRepository.Update(account);
+        return new SuccessResult();
     }
 }

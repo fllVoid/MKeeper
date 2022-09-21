@@ -1,14 +1,15 @@
 ﻿using MKeeper.Domain.Models;
+using MKeeper.Domain.Common.CustomResults;
 
 namespace MKeeper.Domain.Services;
 
 public interface IScheduledTransactionService
 {
-    Task<int> Create(ScheduledTransaction transaction);
+    Task<Result<int>> Create(ScheduledTransaction transaction);
 
-    Task<ScheduledTransaction[]> Get(int[] accountIds);
+    Task<Result<ScheduledTransaction[]>> Get(int[] accountIds);
 
-    Task Update(ScheduledTransaction transaction);
+    Task<Result> Update(ScheduledTransaction transaction);
 
-    Task Delete(int scheduledTransactionId);
+    Task<Result> Delete(int scheduledTransactionId);
 }

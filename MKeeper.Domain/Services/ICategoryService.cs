@@ -1,16 +1,17 @@
 ﻿using MKeeper.Domain.Models;
+using MKeeper.Domain.Common.CustomResults;
 
 namespace MKeeper.Domain.Services;
 
 public interface ICategoryService
 {
-    Task<int> Create(Category category);
+    Task<Result<int>> Create(Category category);
 
-    Task<Category[]> Get(int userId);
+    Task<Result<Category[]>> Get(int userId);
 
-    Task<Category[]> GetSubcategories(int parentCategoryId);
+    Task<Result<Category[]>> GetSubcategories(int parentCategoryId);
 
-    Task Update(Category category);
+    Task<Result> Update(Category category);
 
-    Task Delete(int categoryId);
+    Task<Result> Delete(int categoryId);
 }

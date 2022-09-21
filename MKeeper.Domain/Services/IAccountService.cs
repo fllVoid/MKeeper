@@ -1,14 +1,15 @@
 ﻿using MKeeper.Domain.Models;
+using MKeeper.Domain.Common.CustomResults;
 
 namespace MKeeper.Domain.Services;
 
 public interface IAccountService
 {
-    Task<int> Create(Account account);
+    Task<Result<int>> Create(Account account);
 
-    Task<Account[]> Get(int userId);
+    Task<Result<Account[]>> Get(int userId);
 
-    Task Update(Account account);
+    Task<Result> Update(Account account);
 
-    Task Delete(int accountId);
+    Task<Result> Delete(int accountId);
 }

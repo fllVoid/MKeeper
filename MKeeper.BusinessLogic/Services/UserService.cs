@@ -5,6 +5,7 @@ using MKeeper.Domain.Services;
 using MKeeper.Domain.Common.CustomResults;
 using System.Security.Cryptography;
 using System.Text;
+using MKeeper.BusinessLogic.CustomResults;
 
 namespace MKeeper.BusinessLogic.Services;
 
@@ -26,7 +27,7 @@ public class UserService : IUserService
         var isInvalid = string.IsNullOrEmpty(user.Username) || string.IsNullOrEmpty(user.Email);
         if (isInvalid)
         {
-            return new ErrorResult<int>($"Invalid username or email:\nusername: '{user.Username}'" +
+            return new InvalidUserResult<int>($"Invalid username or email:\nusername: '{user.Username}'" +
                 $"\nemail: '{user.Email}'");
         }
 
@@ -38,7 +39,7 @@ public class UserService : IUserService
     {
         if (userId <= 0)
         {
-            return new ErrorResult<User>($"UserId is less than zero: {userId}");
+            return new InvalidIdResult<User>($"Invalid userId value: {userId}");
         }
         var user = await _userRepository.Get(userId);
         return new SuccessResult<User>(user);
@@ -48,7 +49,7 @@ public class UserService : IUserService
     {
         if (string.IsNullOrWhiteSpace(email))
         {
-            return new ErrorResult<User>($"Invalid email: '{email}'");
+            return new InvalidEmailResult<User>($"Invalid user email: '{email}'");
         }
         var user = await _userRepository.Get(email);
         return new SuccessResult<User>(user);
@@ -58,7 +59,7 @@ public class UserService : IUserService
     {
         if (userId <= 0)
         {
-            return new ErrorResult($"Invalid userId value: {userId}");
+            return new InvalidIdResult($"Invalid userId value: {userId}");
         }
         await _userRepository.Delete(userId);
         return new SuccessResult();
@@ -74,11 +75,8 @@ public class UserService : IUserService
             || user.Id <= 0;
         if (isInvalid)
         {
-            //TODO maybe change to kind of EntitiyNotValidResult
-            return new ErrorResult("Invalid data in User object:\n" +
-                $"Id: {user.Id}\n" +
-                $"Username: '{user.Username}'" +
-                $"Email: '{user.Email}'");
+            return new InvalidUserResult("Invalid User object:\n" +
+                user.ToString());
         }
         await _userRepository.Update(user);
         return new SuccessResult();
@@ -88,11 +86,11 @@ public class UserService : IUserService
     {
         if (string.IsNullOrWhiteSpace(oldPass) || string.IsNullOrWhiteSpace(newPass))
         {
-            return new ErrorResult("Password was null or white space");
+            return new InvalidPasswordResult("Password was null or white space");
         }
         if (userId <= 0)
         {
-            return new ErrorResult($"Invalid userId value: {userId}");
+            return new InvalidIdResult($"Invalid userId value: {userId}");
         }
         var user = await _userRepository.Get(userId);//TODO check null value
         return await ChangePassword(user, oldPass, newPass);
@@ -102,11 +100,11 @@ public class UserService : IUserService
     {
         if (string.IsNullOrWhiteSpace(oldPass) || string.IsNullOrWhiteSpace(newPass))
         {
-            return new ErrorResult("Password was null or white space");
+            return new InvalidPasswordResult("Password was null or white space");
         }
         if (string.IsNullOrWhiteSpace(email))
         {
-            return new ErrorResult($"Invalid email: '{email}'");
+            return new InvalidEmailResult($"Invalid email: '{email}'");
         }
         var user = await _userRepository.Get(email);//TODO check null value
         return await ChangePassword(user, oldPass, newPass);
@@ -122,7 +120,7 @@ public class UserService : IUserService
             await _userRepository.Update(user);
             return new SuccessResult();
         }
-        return new ErrorResult("Wrong old password");
+        return new PasswordDoesntMatchResult("Wrong old password");
     }
 
     private string HashPassword(string password)

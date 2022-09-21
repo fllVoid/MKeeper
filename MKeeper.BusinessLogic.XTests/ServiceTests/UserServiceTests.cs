@@ -7,6 +7,7 @@ using AutoFixture;
 using FluentAssertions;
 using System;
 using MKeeper.Domain.Exceptions;
+using System.Threading.Tasks;
 
 namespace MKeeper.BusinessLogic.XTests.ServiceTests;
 
@@ -29,7 +30,7 @@ public class UserServiceTests
 		//arrange
 		var expectedUserId = _fixture.Create<int>();
 		var user = _fixture.Create<User>();
-		_userRepositoryMock.Setup(x => x.Add(user))
+		_userRepositoryMock.Setup(x => x.Add(user, default))
 			.ReturnsAsync(expectedUserId);
 
 		//act
@@ -37,7 +38,7 @@ public class UserServiceTests
 
 		//assert
 		result.Should().Be(expectedUserId);
-		_userRepositoryMock.Verify(x => x.Add(user), Times.Once);
+		_userRepositoryMock.Verify(x => x.Add(user, default), Times.Once);
 	}
 
 	[Fact]

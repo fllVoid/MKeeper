@@ -1,16 +1,17 @@
 ﻿using MKeeper.Domain.Models;
+using MKeeper.Domain.Common.CustomResults;
 
 namespace MKeeper.Domain.Services;
 
 public interface ITransferService
 {
-    Task<int> Create(Transfer transfer);
+    Task<Result<int>> Create(Transfer transfer);
 
-    Task<Transfer[]> Get(int[] accountIds, DateTime from, DateTime to);
+    Task<Result<Transfer[]>> Get(int[] accountIds, DateTime from, DateTime to);
 
-    Task<Transfer[]> Get(int[] accountIds);
+    Task<Result<Transfer[]>> Get(int[] accountIds);
 
-    Task Update(Transfer transfer);
+    Task<Result> Update(Transfer transfer);
 
-    Task Delete(int transferId);
+    Task<Result> Delete(int transferId);
 }
